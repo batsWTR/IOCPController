@@ -11,8 +11,7 @@
 from tkinter import *
 
 # use customize font
-
-#define MYFONT = ("Helvetica", 15)
+MYFONT = ("Helvetica", 15)
 
 class IOCPController(Tk):
 	''' Main window'''
@@ -25,8 +24,8 @@ class IOCPController(Tk):
 		self.geometry("600x800")
 
 		# vars
-		self.serverIP = StringVar()
-		self.serverPort = IntVar()
+		self.serverIP = 0
+		self.serverPort = 0
 
 	def initialize(self):
 		'''definition du contenue de la fenetre'''
@@ -43,13 +42,13 @@ class IOCPController(Tk):
 
 
 		# labels, entry and buttons
-		self.labIP = Label(self.frame1,text="IP Serveur:")
-		self.labPort = Label(self.frame1,text="Port:")
-		self.but = Button(self.frame3, text="Quitter", command= self.destroy)
+		self.labIP = Label(self.frame1,text="IP Serveur:",font=MYFONT)
+		self.labPort = Label(self.frame1,text="Port:",font=MYFONT)
+		self.but = Button(self.frame3, text="Quitter",font=MYFONT, command= self.destroy)
 		self.but.pack(side=RIGHT)
-		self.but1 = Button(self.frame1,text="Connect", command= self.but1_click)
-		self.entIP = Entry(self.frame1, width = 15)
-		self.entPort = Entry(self.frame1, width = 5)
+		self.but1 = Button(self.frame1,text="Connect",font=MYFONT ,command= self.but1_click)
+		self.entIP = Entry(self.frame1, width = 15,font=MYFONT)
+		self.entPort = Entry(self.frame1, width = 5,font=MYFONT)
 
 		self.la = Label(self.frame2, text="APU").grid(row=0, column=0)
 		self.lo = Label(self.frame2, text="ON").grid(row=0, column=1)
@@ -63,16 +62,23 @@ class IOCPController(Tk):
 		self.entPort.pack(side=LEFT)
 		self.but1.pack(side=LEFT)
 
+
+		# add menu to open file and display them in the grid
+
 	def but1_click(self):
 		'''try to connect to the iocp server'''
 		print(" cliqué ")
-		print("IP: ",self.entIP.get()," Port: ",self.entPort.get())
-		
 		if self.but1["text"] == "Connect":
 			self.but1["text"] = ".Stop ."
+			print("IP: ",self.entIP.get()," Port: ",self.entPort.get())
+			self.serverIP = self.entIP.get()
+			# error if a letter is enter for port-----------------------
+			self.serverPort = int(self.entPort.get())
+			print(self.serverPort)
 			# do something
 		else:
 			self.but1["text"] = "Connect"
+			print("Stop connection to the server")
 			#close connection with the server
 		
 
