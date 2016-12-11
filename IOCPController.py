@@ -34,8 +34,10 @@ class IOCPController(Tk):
 		self.frame1 = Frame(self, borderwidth=2, relief=GROOVE)
 		self.frame1.pack(side=TOP)
 		# middle frame, content xplane vars and values
-		self.frame2 = Frame(self,borderwidth=2, relief=GROOVE)
+		self.frame2 = Frame(self,borderwidth=2, relief=GROOVE,bg = '#fff')
 		self.frame2.pack(side=TOP)
+		self.frame2.columnconfigure(0,minsize=300)
+		self.frame2.columnconfigure(1,minsize=200)
 		# bottom frame, content: quit button
 		self.frame3 = Frame(self,borderwidth=2, relief=GROOVE)
 		self.frame3.pack(side=BOTTOM)
@@ -50,9 +52,10 @@ class IOCPController(Tk):
 		self.entIP = Entry(self.frame1, width = 15,font=MYFONT)
 		self.entPort = Entry(self.frame1, width = 5,font=MYFONT)
 
-		self.la = Label(self.frame2, text="APU").grid(row=0, column=0)
-		self.lo = Label(self.frame2, text="ON").grid(row=0, column=1)
+		self.la = Label(self.frame2, text="NAME").grid(row=0, column=0,sticky = W)
+		self.lo = Label(self.frame2, text="VALUE").grid(row=0, column=1,sticky = E)
 		self.grille = Grid()
+	
 
 
 		# packing
