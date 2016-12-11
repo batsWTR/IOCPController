@@ -80,13 +80,15 @@ class IOCPController(Tk):
 		
 
 		menubar.add_cascade(label="File",menu=filemenu)
-
 		self.config(menu=menubar)
 
 	def but1_click(self):
 		'''try to connect to the iocp server'''
 		print(" cliqué ")
 		if self.entIP.get() == "" or self.entPort.get() == "":
+			return
+		if self.filename == 0:
+			print("no data to register,open data file")
 			return
 		if self.but1["text"] == "Connect":
 			self.but1["text"] = ".Stop ."
@@ -107,8 +109,9 @@ class IOCPController(Tk):
 		Label(self.frame2,text="0",font=DATAFONT).grid(row=nb_row,column=1,sticky = E)
 
 	def openfile(self):
+		'''open file dialog box'''
 		self.filename = askopenfilename()
-		print(self.filename)
+		print("File name: ",self.filename)
 		
 
 if __name__ == "__main__":
