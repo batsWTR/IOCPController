@@ -34,7 +34,7 @@ class IOCPController(Tk):
 		self.frame1 = Frame(self, borderwidth=2, relief=GROOVE)
 		self.frame1.pack(side=TOP)
 		# middle frame, content xplane vars and values
-		self.frame2 = Frame(self,borderwidth=2, relief=GROOVE,bg = '#fff')
+		self.frame2 = Frame(self,borderwidth=2, relief=GROOVE)
 		self.frame2.pack(side=TOP)
 		self.frame2.columnconfigure(0,minsize=300)
 		self.frame2.columnconfigure(1,minsize=200)
@@ -52,11 +52,14 @@ class IOCPController(Tk):
 		self.entIP = Entry(self.frame1, width = 15,font=MYFONT)
 		self.entPort = Entry(self.frame1, width = 5,font=MYFONT)
 
-		self.la = Label(self.frame2, text="NAME").grid(row=0, column=0,sticky = W)
-		self.lo = Label(self.frame2, text="VALUE").grid(row=0, column=1,sticky = E)
+		Label(self.frame2, text="NAME").grid(row=0, column=0,sticky = W)
+		Label(self.frame2, text="VALUE").grid(row=0, column=1,sticky = E)
+
+		
 		self.grille = Grid()
 	
-
+		for i in range(1,6):
+			self.add_row(i,"bats")
 
 		# packing
 		self.labIP.pack(side=LEFT)
@@ -83,6 +86,11 @@ class IOCPController(Tk):
 			self.but1["text"] = "Connect"
 			print("Stop connection to the server")
 			#close connection with the server
+
+	def add_row(self,nb_row,data):
+		'''add rows to the grid'''
+		Label(self.frame2,text=data).grid(row=nb_row,column=0,sticky = W)
+		Label(self.frame2,text="0").grid(row=nb_row,column=1,sticky = E)
 		
 
 if __name__ == "__main__":
