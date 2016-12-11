@@ -9,9 +9,11 @@
 
 
 from tkinter import *
+from tkinter.filedialog import *
 
 # use customize font
-MYFONT = ("Helvetica", 15)
+MYFONT = ("Helvetica", 14)
+DATAFONT =("Helvetiica",12)
 
 class IOCPController(Tk):
 	''' Main window'''
@@ -26,6 +28,7 @@ class IOCPController(Tk):
 		# vars
 		self.serverIP = 0
 		self.serverPort = 0
+		self.filename = 0
 
 	def initialize(self):
 		'''definition du contenue de la fenetre'''
@@ -52,13 +55,13 @@ class IOCPController(Tk):
 		self.entIP = Entry(self.frame1, width = 15,font=MYFONT)
 		self.entPort = Entry(self.frame1, width = 5,font=MYFONT)
 
-		Label(self.frame2, text="NAME").grid(row=0, column=0,sticky = W)
-		Label(self.frame2, text="VALUE").grid(row=0, column=1,sticky = E)
+		Label(self.frame2, text="NAME",font=MYFONT).grid(row=0, column=0,sticky = W)
+		Label(self.frame2, text="VALUE",font=MYFONT).grid(row=0, column=1,sticky = E)
 
 		
 		self.grille = Grid()
 	
-		for i in range(1,6):
+		for i in range(1,3):
 			self.add_row(i,"bats")
 
 		# packing
@@ -70,10 +73,21 @@ class IOCPController(Tk):
 
 
 		# add menu to open file and display them in the grid
+		menubar = Menu(self)
+		filemenu = Menu(menubar,tearoff=0)
+		filemenu.add_command(label="Open",command=self.openfile)
+		filemenu.add_command(label="Quitter",command=self.quit)
+		
+
+		menubar.add_cascade(label="File",menu=filemenu)
+
+		self.config(menu=menubar)
 
 	def but1_click(self):
 		'''try to connect to the iocp server'''
 		print(" cliqué ")
+		if self.entIP.get() == "" or self.entPort.get() == "":
+			return
 		if self.but1["text"] == "Connect":
 			self.but1["text"] = ".Stop ."
 			print("IP: ",self.entIP.get()," Port: ",self.entPort.get())
@@ -89,8 +103,12 @@ class IOCPController(Tk):
 
 	def add_row(self,nb_row,data):
 		'''add rows to the grid'''
-		Label(self.frame2,text=data).grid(row=nb_row,column=0,sticky = W)
-		Label(self.frame2,text="0").grid(row=nb_row,column=1,sticky = E)
+		Label(self.frame2,text=data,font=DATAFONT).grid(row=nb_row,column=0,sticky = W)
+		Label(self.frame2,text="0",font=DATAFONT).grid(row=nb_row,column=1,sticky = E)
+
+	def openfile(self):
+		self.filename = askopenfilename()
+		print(self.filename)
 		
 
 if __name__ == "__main__":
