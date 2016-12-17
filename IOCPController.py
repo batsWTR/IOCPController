@@ -61,8 +61,7 @@ class IOCPController(Tk):
 		
 		self.grille = Grid()
 	
-		for i in range(1,3):
-			self.add_row(i,"bats")
+	
 
 		# packing
 		self.labIP.pack(side=LEFT)
@@ -108,10 +107,36 @@ class IOCPController(Tk):
 		Label(self.frame2,text=data,font=DATAFONT).grid(row=nb_row,column=0,sticky = W)
 		Label(self.frame2,text="0",font=DATAFONT).grid(row=nb_row,column=1,sticky = E)
 
+
+	
+
 	def openfile(self):
 		'''open file dialog box'''
 		self.filename = askopenfilename()
-		print("File name: ",self.filename)
+		if self.readFile(self.filename) == -1:
+			print("WRONG FILE")
+			return
+		print("Reading Success")
+		
+	def readFile(self,path):
+		print("File name: ",path)
+		#ouverture du fichier mode lecture
+		try:
+			fichier = open(path,"r")
+			
+			for line in fichier:
+				if line[0] == '0'or line[0] == '1'or line[0]=='2' or line[0]=='3' or line[0]=='4' or line[0] =='5' or line[0]=='6' or line[0]=='7' or line[0]=='8' or line[0]=='9':
+					self.fileFilter(line)
+			fichier.close()
+		except:
+			return -1
+		return 0
+		# si la ligne ne commence pas par un chiffre  -> on oublie
+		# si elle commence par un chiffre, on affiche
+	def fileFilter(self,line):
+		listLine = (line.split("\t"))
+		self.add_row(int(listLine[0]), listLine[1])
+	
 		
 
 if __name__ == "__main__":
