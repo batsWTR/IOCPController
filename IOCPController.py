@@ -105,9 +105,11 @@ class IOCPController(Tk):
 	def add_row(self,nb_row,data):
 		'''add rows to the grid'''
 		Label(self.frame2,text=data,font=DATAFONT).grid(row=nb_row,column=0,sticky = W)
-		Label(self.frame2,text="0",font=DATAFONT).grid(row=nb_row,column=1,sticky = E)
+		Label(self.frame2,text=0,font=DATAFONT).grid(row=nb_row,column=1,sticky = E)
 
-
+	def updateValue(self,nbRow,value):
+		'''update sim value'''
+		Label(self.frame2,text=value,font=DATAFONT).grid(row=nbRow,column=1,sticky = E)
 	
 
 	def openfile(self):
@@ -117,25 +119,31 @@ class IOCPController(Tk):
 			print("WRONG FILE")
 			return
 		print("Reading Success")
+		self.updateValue(10,2)
 		
 	def readFile(self,path):
+		'''read all lines af the file'''
 		print("File name: ",path)
 		#ouverture du fichier mode lecture
 		try:
 			fichier = open(path,"r")
 			
 			for line in fichier:
+				# if number as first element
 				if line[0] == '0'or line[0] == '1'or line[0]=='2' or line[0]=='3' or line[0]=='4' or line[0] =='5' or line[0]=='6' or line[0]=='7' or line[0]=='8' or line[0]=='9':
+					#send to filter to exctract datas
 					self.fileFilter(line)
 			fichier.close()
 		except:
 			return -1
 		return 0
-		# si la ligne ne commence pas par un chiffre  -> on oublie
-		# si elle commence par un chiffre, on affiche
+
 	def fileFilter(self,line):
+		'''extract datas from file'''
 		listLine = (line.split("\t"))
-		self.add_row(int(listLine[0]), listLine[1])
+		tmp = listLine[1].split('/')
+		print(tmp[-1])
+		self.add_row(int(listLine[0]), tmp[-1])
 	
 		
 
